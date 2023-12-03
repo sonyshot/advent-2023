@@ -3,5 +3,5 @@ mod puzzle_2;
 mod puzzle_3;
 
 fn main() {
-    println!("{}", puzzle_2::solve());
+    println!("{}", puzzle_3::solve());
 }
