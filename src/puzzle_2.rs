@@ -1,5 +1,4 @@
 use std::fs::read_to_string;
-use std::ops;
 
 pub fn solve() -> u32 {
     let filepath = "assets/puzzle2/input.txt";
