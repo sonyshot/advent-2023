@@ -99,7 +99,6 @@ impl Hand<'_> {
 
     // I would've liked to use HandType, but there are so many steps to apply ordering to them
     fn classify(&self) -> u32 {
-        let mut prev_char = ' ';
         let mut char_count = HashMap::<char, u32>::new();
         for c in self.cards.chars() {
             if let Some(count) = char_count.get_mut(&c) {
@@ -108,9 +107,11 @@ impl Hand<'_> {
                 char_count.insert(c, 1);
             }
         }
-        let orig_len = char_count.len();
         let j_count = char_count.remove(&'J');
-        match orig_len {
+        if let Some(x) = j_count {
+            char_count.insert('J', x);
+        }
+        match char_count.len() {
             4 => {
                 if let Some(_) = j_count {
                     // only 1 or 2 Js possible, both cases turn one pair into three of a kind
