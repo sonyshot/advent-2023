@@ -1,10 +1,7 @@
 use regex::Regex;
 use std::{
-    char::REPLACEMENT_CHARACTER,
-    collections::HashMap,
     fs::read_to_string,
-    iter::zip,
-    time::{SystemTime, UNIX_EPOCH},
+    iter::zip
 };
 
 pub fn solve() -> u32 {
