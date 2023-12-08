@@ -95,7 +95,7 @@ fn two(lines: Vec<&str>) -> u32 {
         while y != 0 {
             (x, y) = (y, x % y);
         }
-        println!("is {}", x );
+        println!("is {}", x);
         x
     }
 
@@ -103,7 +103,12 @@ fn two(lines: Vec<&str>) -> u32 {
         x * (y / gcd(x, y))
     }
 
-    count = periods.as_slice().iter().copied().reduce(|acc, el| lcm(acc, el)).unwrap() as u32;
+    count = periods
+        .as_slice()
+        .iter()
+        .copied()
+        .reduce(|acc, el| lcm(acc, el))
+        .unwrap() as u32;
 
     // 'outer: loop {
     //     for c in l_r_instructions.chars() {
