@@ -104,7 +104,6 @@ fn two(lines: Vec<&str>) -> u32 {
     }
 
     count = periods
-        .as_slice()
         .iter()
         .copied()
         .reduce(|acc, el| lcm(acc, el))
