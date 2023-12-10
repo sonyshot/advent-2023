@@ -20,16 +20,28 @@ fn two(lines: Vec<&str>) -> u64 {
 
     let mut area = 0;
 
+    // iterate over all tiles
+    // this method checks whether we have actually crossed to the inside/outside
+    // implementation relies on the fact that we are traversing horizontally from the left and start outside the loop (impossible to start inside)
+    // crossing a vertical directly causes the switch, entering a corner from above and exiting to below (and vice versa) also causes a switch (basically a spread out vertical)
+    // any other traversal of pipes that are part of the path cause no change to inside/outside-ness
     (0..height).into_iter().for_each(|row| {
+        // track whether we're inside and how we entered a horizontal leg
         let mut inside = false;
         let mut path_leg: Option<Tile> = None;
         (0..width).into_iter().for_each(|col| {
+            // if the current tile is on the loop...
             if pipe_path.contains(&(row, col)) {
+                // determine whether we've switched between inside/outside
                 match map[row][col] {
                     Tile::UpDown => {
+                        //crossing vertical always switches
                         inside = !inside;
                     }
                     Tile::DownLeft => {
+                        // if we're in a down-left that's part of the path, we must have entered from down/up-right
+                        // entering from up-right means we've crossed inside/outside
+                        // otherwise, we've exited the horizontal leg and didn't cross
                         if let Some(pl) = path_leg {
                             if pl == Tile::UpRight {
                                 inside = !inside;
@@ -39,6 +51,7 @@ fn two(lines: Vec<&str>) -> u64 {
                         }
                     }
                     Tile::UpLeft => {
+                        // similar to above
                         if let Some(pl) = path_leg {
                             if pl == Tile::DownRight {
                                 inside = !inside;
@@ -47,10 +60,13 @@ fn two(lines: Vec<&str>) -> u64 {
                             }
                         }
                     }
+                    // these two, when on the path, start a horizontal leg
                     Tile::UpRight => path_leg = Some(Tile::UpRight),
                     Tile::DownRight => path_leg = Some(Tile::DownRight),
+
                     Tile::Start => {
-                        // by inspection, this puzzle has Start treated as UpLeft
+                        // by inspection, this puzzle has Start as UpLeft, so use that same branch
+                        // could/should probably discover this dynamically, or set the tile itself to be an UpLeft
                         if let Some(pl) = path_leg {
                             if pl == Tile::DownRight {
                                 inside = !inside;
