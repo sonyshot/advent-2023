@@ -74,7 +74,7 @@ fn one(lines: Vec<&str>) -> u64 {
             // println!("extra_rows {:?}", extra_rows);
             // println!("extra_cols {:?}", extra_cols);
 
-            sum += row_dist + extra_rows + col_dist + extra_cols;
+            sum += row_dist + extra_rows*999999 + col_dist + extra_cols*999999;
         }
         prev_galaxies.insert(galaxy);
     }
