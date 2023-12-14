@@ -11,10 +11,11 @@ mod puzzle_8;
 mod puzzle_9;
 mod puzzle_10;
 mod puzzle_11;
+mod puzzle_12;
 
 fn main() {
     let start = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
-    println!("{}", puzzle_11::solve());
+    println!("{}", puzzle_12::solve());
     let end = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     println!("Executed in {} seconds", (end-start).as_secs());
 }
