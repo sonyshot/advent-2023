@@ -8,7 +8,7 @@ pub fn solve() -> u64 {
     let file_path = "assets/puzzle12/input.txt";
     let file_lines = read_to_string(file_path).unwrap();
     let file_lines_lines: Vec<&str> = file_lines.lines().collect();
-    two(file_lines_lines)
+    one(file_lines_lines)
 }
 
 fn one(lines: Vec<&str>) -> u64 {
@@ -23,11 +23,14 @@ fn one(lines: Vec<&str>) -> u64 {
 
         let q_count = issue.chars().filter(|c| c == &'?').count();
 
+        let mut lower_sum = 0;
         for trial in 0..2_u64.pow(q_count as u32) {
             if is_valid(create_permutation(issue, trial), &parsed_nums) {
                 sum += 1;
+                lower_sum += 1;
             }
         }
+        println!("issue: {} - sum: {}", issue, lower_sum);
     }
 
     sum
@@ -45,18 +48,29 @@ fn two(lines: Vec<&str>) -> u64 {
 
         let issue_copies: Vec<&str> = (0..5).map(|_| issue).collect();
         let real_issue = issue_copies.join("?");
+        let trimmed = real_issue.trim_matches('.');
 
         let q_count = real_issue.chars().filter(|c| c == &'?').count();
         let real_nums = parsed_nums.repeat(5);
 
         for trial in 0..2_u64.pow(q_count as u32) {
-            if is_valid(create_permutation(&real_issue, trial), &real_nums) {
+            if is_valid(create_permutation(&trimmed, trial), &real_nums) {
                 sum += 1;
             }
         }
     }
 
     sum
+}
+
+fn reduce_complexity(line: String, config: &[u64]) -> String {
+    let spl = line.split('.');
+
+    for (i, section) in spl.enumerate() {
+
+    }
+
+    String::new()
 }
 
 fn create_permutation(line: &str, perm: u64) -> String {
